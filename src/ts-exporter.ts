@@ -205,7 +205,7 @@ const strapiModelToInterface = (m: IStrapiModel, structure: IStructure[], enumm:
   result.push(` * Model definition for ${name}`);
   result.push(' */');
   result.push(`export interface ${interfaceName} {`);
-  result.push('  id: num;');
+  result.push('  id: number;');
   if(!m.info.icon) {
     // If it has icon it's a component and no timestamps
     result.push('  created_at: number;');
