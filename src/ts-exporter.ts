@@ -16,7 +16,7 @@ interface IStructure {
  *
  * @param name camelCase name
  */
-const toInterfaceName = (name: string) => name ? `I${name.replace(/^./, (str: string) => str.toUpperCase())}` : 'any';
+const toInterfaceName = (name: string) => name ? `${name.replace(/(^\w|-\w)/g, (text) => text.replace(/-/, "").toUpperCase())}` : 'any';
 
 /**
  * Convert a name to a Pascal case name
@@ -121,9 +121,7 @@ const strapiModelAttributeToProperty = (
   const propType = a.collection
     ? toInterfaceName(findModelName(a.collection))
     : a.model
-      ? a.model === 'file'
-        ? 'Blob'
-        : toInterfaceName(findModelName(a.model))
+      ? toInterfaceName(findModelName(a.model))
       : a.type
         ? toPropertyType(interfaceName, name, a, enumm)
         : 'unknown';
@@ -203,11 +201,17 @@ const strapiModelToInterface = (m: IStrapiModel, structure: IStructure[], enumm:
   if (imports) {
     result.push(imports + '\n');
   }
+  console.log('model?', m);
   result.push('/**');
   result.push(` * Model definition for ${name}`);
   result.push(' */');
   result.push(`export interface ${interfaceName} {`);
-  result.push('  id: string;');
+  result.push('  id: num;');
+  if(!m.info.icon) {
+    // If it has icon it's a component and no timestamps
+    result.push('  created_at: number;');
+    result.push('  updated_at: number;');
+  }
   if (m.attributes) {
     for (const aName in m.attributes) {
       if (!m.attributes.hasOwnProperty(aName)) {
@@ -224,6 +228,7 @@ const writeIndex = (folder: string, structure: IStructure[]) => {
   const outputFile = path.resolve(folder, 'index.ts');
   const output = structure
     .map((s) => (s.nested ? `export * from './${s.snakeName}/${s.snakeName}';` : `export * from './${s.snakeName}';`))
+    .sort()
     .join('\n');
   fs.writeFileSync(outputFile, output + '\n');
 };
