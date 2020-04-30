@@ -201,7 +201,6 @@ const strapiModelToInterface = (m: IStrapiModel, structure: IStructure[], enumm:
   if (imports) {
     result.push(imports + '\n');
   }
-  console.log('model?', m);
   result.push('/**');
   result.push(` * Model definition for ${name}`);
   result.push(' */');
