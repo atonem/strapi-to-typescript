@@ -153,7 +153,7 @@ const strapiModelExtractImports = (m, structure) => {
             const a = componentCompatible(m.attributes[aName]);
             const proposedImport = a.collection
                 ? toImportDefinition(a.collection)
-                : a.model && a.model !== 'file'
+                : a.model
                     ? toImportDefinition(a.model)
                     : '';
             if (proposedImport) {

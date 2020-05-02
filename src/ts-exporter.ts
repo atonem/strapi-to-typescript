@@ -176,7 +176,7 @@ const strapiModelExtractImports = (m: IStrapiModel, structure: IStructure[]) => 
 
       const proposedImport = a.collection
         ? toImportDefinition(a.collection)
-        : a.model && a.model !== 'file'
+        : a.model 
           ? toImportDefinition(a.model)
           : '';
       if (proposedImport) {
