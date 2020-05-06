@@ -16,7 +16,7 @@ interface IStructure {
  *
  * @param name camelCase name
  */
-const toInterfaceName = (name: string) => name ? `${name.replace(/(^\w|-\w)/g, (text) => text.replace(/-/, "").toUpperCase())}` : 'any';
+const toInterfaceName = (name: string) => name ? `${name.replace(/\s/g, '-').replace(/(^\w|-\w)/g, (text) => text.replace(/-/, "").toUpperCase())}` : 'any';
 
 /**
  * Convert a name to a Pascal case name
@@ -34,7 +34,8 @@ const toPascalCase = (name: string) => name ? `${name.replace(/^./, (str: string
  */
 export const toSnakeName = (name: string) =>
   name
-    .split(/(?=[A-Z])/)
+    .split(/(?=[A-Z ])/)
+    .map(val => val.trim())
     .join('-')
     .toLowerCase();
 

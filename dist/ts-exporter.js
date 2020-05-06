@@ -15,7 +15,7 @@ const path = __importStar(require("path"));
  *
  * @param name camelCase name
  */
-const toInterfaceName = (name) => name ? `${name.replace(/(^\w|-\w)/g, (text) => text.replace(/-/, "").toUpperCase())}` : 'any';
+const toInterfaceName = (name) => name ? `${name.replace(/\s/g, '-').replace(/(^\w|-\w)/g, (text) => text.replace(/-/, "").toUpperCase())}` : 'any';
 /**
  * Convert a name to a Pascal case name
  * pascalCase => PascalCase.
@@ -29,7 +29,8 @@ const toPascalCase = (name) => name ? `${name.replace(/^./, (str) => str.toUpper
  * @param name input name
  */
 exports.toSnakeName = (name) => name
-    .split(/(?=[A-Z])/)
+    .split(/(?=[A-Z ])/)
+    .map(val => val.trim())
     .join('-')
     .toLowerCase();
 /**
