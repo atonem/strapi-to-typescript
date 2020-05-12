@@ -54,6 +54,7 @@ const toPropertyType = (interfaceName: string, fieldName: string, model: IStrapi
     case 'richtext':
     case 'email':
     case 'password':
+    case 'uid':
       return 'string';
     case 'enumeration':
       if(enumm){

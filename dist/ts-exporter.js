@@ -48,6 +48,7 @@ const toPropertyType = (interfaceName, fieldName, model, enumm) => {
         case 'richtext':
         case 'email':
         case 'password':
+        case 'uid':
             return 'string';
         case 'enumeration':
             if (enumm) {
