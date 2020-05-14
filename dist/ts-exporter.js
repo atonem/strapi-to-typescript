@@ -63,6 +63,8 @@ const toPropertyType = (interfaceName, fieldName, model, enumm) => {
             return 'Blob';
         case 'json':
             return '{ [key: string]: any }';
+        case 'dynamiczone':
+            return 'any[]';
         case 'decimal':
         case 'float':
         case 'biginteger':
@@ -175,7 +177,7 @@ const strapiModelToInterface = (m, structure, enumm) => {
     const name = m.info.name;
     const interfaceName = toInterfaceName(name);
     const result = [];
-    const imports = strapiModelExtractImports(m, structure);
+    const imports = strapiModelExtractImports(m, structure).split('\n').filter((i) => !i.startsWith(`import { ${interfaceName} }`)).join('\n');
     if (imports) {
         result.push(imports + '\n');
     }
