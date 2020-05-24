@@ -17,7 +17,15 @@ exports.exec = (options) => __awaiter(this, void 0, void 0, function* () {
     if (options.inputGroup) {
         files.push(...yield importer_1.findFiles(options.inputGroup, /.json/));
     }
-    const strapiModels = yield importer_1.importFiles(files);
+    const strapiModels = yield importer_1.importFiles(files).then(models => 
+    // Remove duplicate models and use the latest read one
+    models.reduce((acc, current) => {
+        if (acc.some(v => v.collection_name === current.collectionName)) {
+            acc = acc.filter(v => v.collection_name === current.collectionName);
+        }
+        acc.push(current);
+        return acc;
+    }, []));
     ts_exporter_1.convert(options.output, strapiModels, options.nested, options.enum)
         .then((count) => {
         log(`Generated ${count} interfaces.`);
