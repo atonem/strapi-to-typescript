@@ -204,10 +204,13 @@ const strapiModelToInterface = (m, structure, enumm) => {
 };
 const writeIndex = (folder, structure) => {
     const outputFile = path.resolve(folder, 'index.ts');
-    const output = structure
-        .map((s) => (s.nested ? `export * from './${s.snakeName}/${s.snakeName}';` : `export * from './${s.snakeName}';`))
-        .sort()
-        .join('\n');
+    const output = [
+        ...new Set(structure
+            .map(s => s.nested
+            ? `export * from './${s.snakeName}/${s.snakeName}';`
+            : `export * from './${s.snakeName}';`)
+            .sort())
+    ].join('\n');
     fs.writeFileSync(outputFile, output + '\n');
 };
 /**
