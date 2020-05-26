@@ -62,7 +62,7 @@ const toPropertyType = (interfaceName, fieldName, model, enumm) => {
         case 'media':
             return 'Blob';
         case 'json':
-            return '{ [key: string]: any }';
+            return 'any';
         case 'dynamiczone':
             return 'any[]';
         case 'decimal':
