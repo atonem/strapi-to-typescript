@@ -55,6 +55,9 @@ const toPropertyType = (interfaceName: string, fieldName: string, model: IStrapi
     case 'email':
     case 'password':
     case 'uid':
+    // Would be great to have these more constrained than just strings
+    case 'date':
+    case 'time':
       return 'string';
     case 'enumeration':
       if(enumm){
@@ -62,7 +65,7 @@ const toPropertyType = (interfaceName: string, fieldName: string, model: IStrapi
       } else {
         return model.enum ? `"${model.enum.join(`" | "`)}"` : "string";
       }
-    case 'date':
+    case 'datetime':
       return 'Date';
     case 'media':
       return 'Blob';

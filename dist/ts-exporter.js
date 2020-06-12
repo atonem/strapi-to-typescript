@@ -49,6 +49,9 @@ const toPropertyType = (interfaceName, fieldName, model, enumm) => {
         case 'email':
         case 'password':
         case 'uid':
+        // Would be great to have these more constrained than just strings
+        case 'date':
+        case 'time':
             return 'string';
         case 'enumeration':
             if (enumm) {
@@ -57,7 +60,7 @@ const toPropertyType = (interfaceName, fieldName, model, enumm) => {
             else {
                 return model.enum ? `"${model.enum.join(`" | "`)}"` : "string";
             }
-        case 'date':
+        case 'datetime':
             return 'Date';
         case 'media':
             return 'Blob';
